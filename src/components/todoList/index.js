@@ -2,6 +2,24 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 
+const Ul = (props) => {
+
+    const dispatch = useDispatch();
+
+    function removeTodo(){
+        
+        dispatch({type:'REMOVE_TODO',todo:props.value });
+    }
+
+
+    return(
+    <li>{ props.value }
+        <button onClick={ removeTodo }>{ props.value }</button>
+    </li>
+    );
+}
+
+
 export default function TodoList(props){
 
     const todos = useSelector( state => state.data );
@@ -20,7 +38,10 @@ export default function TodoList(props){
     return(
         <>
         <ul>
-         { todos.map(todo => <li key={ Math.random() }>{ todo }</li>) }
+            {
+                todos.map( todo => <Ul key={ Math.random() } value={ todo }></Ul>)
+            }
+
         </ul>
         <input type="text" value={ newTodo } onChange={ handleChangeNewTodo }></input>
         <button type="button" onClick={ addTodo }>
